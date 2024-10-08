@@ -14,7 +14,7 @@ class Subscriber:
         self.connection = self.conn()
         self.channel = self.connection.channel()
         self.queue_name = queue_name
-        self.channel.queue_declare(queue=self.queue_name)
+        self.channel.queue_declare(queue=self.queue_name, durable=True)
         self.producer = Producer()
 
     def conn(self):

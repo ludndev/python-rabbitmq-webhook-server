@@ -6,7 +6,7 @@ class Producer:
     def __init__(self):
         self.connection = self.conn()
         self.channel = self.connection.channel()
-        self.channel.queue_declare(queue=Config.WEBHOOK_QUEUE)
+        self.channel.queue_declare(queue=Config.WEBHOOK_QUEUE, durable=True)
 
     def conn(self):
         config = pika.ConnectionParameters(host=Config.RABBITMQ_HOST, port=Config.RABBITMQ_PORT)
