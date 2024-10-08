@@ -59,6 +59,7 @@ class Subscriber:
         print(f"Callback Sent: {callback_message}")
 
     def start(self):
+        self.channel.basic_qos(prefetch_count=1)
         self.channel.basic_consume(queue=self.queue_name, on_message_callback=self.process, auto_ack=True)
         print(f'Waiting for messages on {self.queue_name}. To exit press CTRL+C')
         self.channel.start_consuming()
