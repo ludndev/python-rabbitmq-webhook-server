@@ -16,7 +16,10 @@ class Producer:
         self.channel.basic_publish(
             exchange='',
             routing_key=Config.WEBHOOK_QUEUE,
-            body=payload.to_json()
+            body=payload.to_json(),
+            properties=pika.BasicProperties(
+              delivery_mode=2,
+            ))
         )
         print(f"Sent: {payload.to_json()}")
 
