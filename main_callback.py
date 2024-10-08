@@ -2,6 +2,11 @@ from config import Config
 from subscriber import Subscriber
 import json
 
+def callback_processing(ch, method, properties, body):
+    # Process the incoming callback messages
+    callback_data = json.loads(body)
+    print(f"Received callback: {callback_data}")
+
 def main():
     callback_subscriber = Subscriber(Config.CALLBACK_QUEUE)
 
