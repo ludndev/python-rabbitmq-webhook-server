@@ -29,9 +29,6 @@ class Subscriber:
         payload = json.loads(body)
         dto = PayloadDto(**payload)
 
-        # make thread blocking
-        time.sleep(10)
-
         if 'headers' in payload and len(payload['headers']) > 0:
             headers.update(payload['headers'])
 
