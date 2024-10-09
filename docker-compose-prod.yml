@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  webhook_service:
+    container_name: webhook_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      USER_AGENT: "Webhook Engine"
+      RABBITMQ_HOST: "webhook_rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS}
+      WEBHOOK_QUEUE: "webhook"
+      CALLBACK_QUEUE: "webhook:callback"
+    networks:
+      - webhook_network
+    depends_on:
+      webhook_rabbitmq:
+        condition: service_healthy
+
+  webhook_rabbitmq:
+    container_name: webhook_rabbitmq
+    image: rabbitmq:4.0.2-alpine
+    ports:
+      - 5672:5672
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - webhook_rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - webhook_network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  webhook_rabbitmq_data:
+
+networks:
+  webhook_network:
+    driver: bridge
