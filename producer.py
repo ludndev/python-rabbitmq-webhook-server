@@ -19,7 +19,7 @@ class Producer:
             body=payload.to_json(),
             properties=pika.BasicProperties(
               delivery_mode=2,
-            ))
+            )
         )
         print(f"Sent: {payload.to_json()}")
 
