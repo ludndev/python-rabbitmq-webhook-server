@@ -9,7 +9,8 @@ class Producer:
         self.channel.queue_declare(queue=Config.WEBHOOK_QUEUE, durable=True)
 
     def conn(self):
-        config = pika.ConnectionParameters(host=Config.RABBITMQ_HOST, port=Config.RABBITMQ_PORT)
+        credentials = pika.PlainCredentials(username=Config.RABBITMQ_USER, password=Config.RABBITMQ_PASS)
+        config = pika.ConnectionParameters(host=Config.RABBITMQ_HOST, port=Config.RABBITMQ_PORT, credentials=credentials)
         return pika.BlockingConnection(config)
 
     def produce_message(self, payload: PayloadDto):

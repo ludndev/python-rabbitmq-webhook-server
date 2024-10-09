@@ -18,7 +18,8 @@ class Subscriber:
         self.producer = Producer()
 
     def conn(self):
-        config = pika.ConnectionParameters(host=Config.RABBITMQ_HOST, port=Config.RABBITMQ_PORT)
+        credentials = pika.PlainCredentials(username=Config.RABBITMQ_USER, password=Config.RABBITMQ_PASS)
+        config = pika.ConnectionParameters(host=Config.RABBITMQ_HOST, port=Config.RABBITMQ_PORT, credentials=credentials)
         return pika.BlockingConnection(config)
 
     def process(self, ch, method, properties, body):
