@@ -6,6 +6,7 @@ load_dotenv()  # Load environment variables from .env file
 class Config:
     USER_AGENT = os.getenv('USER_AGENT', 'Webhook Engine')
 
+    RABBITMQ_VIRTUAL_HOST = os.getenv('RABBITMQ_VIRTUAL_HOST', '/')
     RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'localhost')
     RABBITMQ_PORT = int(os.getenv('RABBITMQ_PORT', 5672))
     RABBITMQ_USER = os.getenv('RABBITMQ_USER', 'admin')
