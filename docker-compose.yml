@@ -8,10 +8,7 @@ services:
       dockerfile: Dockerfile
     environment:
       USER_AGENT: "Webhook Engine"
-      RABBITMQ_HOST: "webhook_rabbitmq"
-      RABBITMQ_PORT: "5672"
-      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_URL: "amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@webhook_rabbitmq:5672/"
       WEBHOOK_QUEUE: "webhook"
       CALLBACK_QUEUE: "webhook:callback"
     networks:
