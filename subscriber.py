@@ -29,6 +29,8 @@ class Subscriber:
         payload = json.loads(body)
         dto = PayloadDto(**payload)
 
+        print(f"Subscriber: Data received", dto)
+
         if 'headers' in payload and len(payload['headers']) > 0:
             headers.update(payload['headers'])
 
